@@ -40,19 +40,22 @@ bool parse_file(char *path, int *dial, int *result){
         if(n != 2){
             printf("sscanf failed\n");
             return false;
-        }
-        int before = *dial;
+        }        
+        int full = number/100;
+        int zeros = full;
+        number %= 100;
         if(direction == 'R'){
-            number %= 100;
+            if(*dial + number >= 100) zeros++;
             *dial = (*dial + number) % 100;
         } else if (direction == 'L'){
-            number %= 100;
-            *dial = (*dial - number) % 100;
+            if(*dial > 0 && number >= *dial) zeros++;
+            *dial = (*dial - number + 100) % 100;
         } else {
             printf("Invalid Operation:%c\n", direction);
             return false;
         }
-        if(*dial == 0) (*result)++;
+        *result += zeros;
     }
+    fclose(input);
     return true;
 }
