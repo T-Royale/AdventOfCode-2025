@@ -27,6 +27,7 @@ int main(void) {
             }
         }
     }
+    free(ranges);
     printf("Result is: %d\n", result);
     return 0;
 }
