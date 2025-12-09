@@ -6,3 +6,5 @@ typedef struct ingredient_range_t {
     uint64_t min;
     uint64_t max;
 } ingredient_range_t;
+
+int cmp(const void *a, const void *b);
