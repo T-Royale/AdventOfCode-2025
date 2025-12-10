@@ -24,6 +24,7 @@ int main(void) {
 
         int problem_len = end - start;
         char buff[problem_len+1];
+        problems[i].nums = calloc(lines_count, sizeof(uint64_t));
         for(int j = 0; j < lines_count; j++){
             memcpy(buff, &lines[j][start], problem_len);
             buff[problem_len] = '\0';
@@ -49,8 +50,8 @@ int main(void) {
         }
         result += (uint64_t)problem_result;
     }
-
-
+    fclose(input);
+    for(int i = 0; i < problem_count; i++) free(problems[i].nums);
     printf("El resultado final es %" PRIu64 "\n", result);
     return 0;
 }
