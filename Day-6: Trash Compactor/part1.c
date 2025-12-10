@@ -3,14 +3,17 @@
 int main(void) {
     FILE* input = fopen("input.txt", "r");
     uint64_t result = 0;
-    char lines[NUMBERS_PER_COL+1][4092];
-    for(int i = 0; i <= NUMBERS_PER_COL; i++) fgets(lines[i], 4092, input);
+    char lines[MAX_NUMBERS_PER_COL+1][4092];
+    int lines_count = 0;
+    while(fgets(lines[lines_count], 4092, input) != 0) lines_count++;
+    lines_count -= 1;
+    for(int i = 0; i <= lines_count; i++) fgets(lines[i], 4092, input);
     int len = strlen(lines[0]);
 
     int problem_starts[MAX_PROBLEMS] = {0};
     int problem_count = 0;
     for(int i = 0; i < len; i++){
-        if(lines[NUMBERS_PER_COL][i] == '+' || lines[NUMBERS_PER_COL][i] == '*'){
+        if(lines[lines_count][i] == '+' || lines[lines_count][i] == '*'){
             problem_starts[problem_count++] = i;
         }
     }
@@ -21,17 +24,17 @@ int main(void) {
 
         int problem_len = end - start;
         char buff[problem_len+1];
-        for(int j = 0; j < NUMBERS_PER_COL; j++){
+        for(int j = 0; j < lines_count; j++){
             memcpy(buff, &lines[j][start], problem_len);
             buff[problem_len] = '\0';
             problems[i].nums[j] = atoi(buff);
         }
-        problems[i].op = lines[NUMBERS_PER_COL][problem_starts[i]];
+        problems[i].op = lines[lines_count][problem_starts[i]];
     }
 
     for(int i = 0; i < problem_count; i++){
         uint64_t problem_result = problems[i].nums[0];
-        for(int j = 1; j < NUMBERS_PER_COL; j++){
+        for(int j = 1; j < lines_count; j++){
             switch(problems[i].op){
                 case '+':
                     problem_result += problems[i].nums[j];
