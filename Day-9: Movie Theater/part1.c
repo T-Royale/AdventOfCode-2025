@@ -3,7 +3,7 @@
 int main() {
     int64_t result = 0;
     FILE* input = fopen("input.txt", "r");
-    red_squares_t squares[MAX_SQUARE_COUNT];
+    point_t squares[MAX_SQUARE_COUNT];
     int count = 0;
     char buff[MAX_LINE_LEN];
     while(fgets(buff, MAX_LINE_LEN, input) != NULL){
